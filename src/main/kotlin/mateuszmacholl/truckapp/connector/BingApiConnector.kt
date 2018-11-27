@@ -16,7 +16,7 @@ class BingApiConnector(
         private val restTemplate: RestTemplate,
         private val bingApiDistanceDeserializer: BingApiDistanceDeserializer) {
 
-    val apiUrl = "http://dev.virtualearth.net/REST/V1/"
+    private val apiUrl = "http://dev.virtualearth.net/REST/V1/"
 
     fun getDistance(from: String, to: String): Double {
         val url = apiUrl + "Routes/Driving?wp.0=$from&wp.1=$to&key=${bingApiProperties.key}"

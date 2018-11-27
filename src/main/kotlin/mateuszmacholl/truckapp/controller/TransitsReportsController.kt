@@ -1,8 +1,8 @@
 package mateuszmacholl.truckapp.controller
 
 import mateuszmacholl.truckapp.converter.ConverterContext
-import mateuszmacholl.truckapp.converter.DateTimeConverter
-import mateuszmacholl.truckapp.converter.TransitDailyAverageReportConverter
+import mateuszmacholl.truckapp.converter.LocalDateConverter
+import mateuszmacholl.truckapp.converter.TransitAverageReportConverter
 import mateuszmacholl.truckapp.converter.TransitReportConverter
 import mateuszmacholl.truckapp.service.TransitService
 import org.springframework.http.HttpStatus
@@ -23,8 +23,8 @@ class TransitsReportsController(private val converterContext: ConverterContext,
     @RequestMapping(value = ["/extent"], method = [RequestMethod.GET])
     fun getAllInExtent(@RequestParam startDate: String,
                        @RequestParam endDate: String): ResponseEntity<*> {
-        val startLocalDate = converterContext.get(DateTimeConverter::class.java).convert(startDate)
-        val endLocalDate = converterContext.get(DateTimeConverter::class.java).convert(endDate)
+        val startLocalDate = converterContext.get(LocalDateConverter::class.java).convert(startDate)
+        val endLocalDate = converterContext.get(LocalDateConverter::class.java).convert(endDate)
         val transits = transitService.getAllInExtent(startLocalDate, endLocalDate)
         val report = converterContext.get(TransitReportConverter::class.java).convert(transits)
         return ResponseEntity(report, HttpStatus.OK)
@@ -33,9 +33,9 @@ class TransitsReportsController(private val converterContext: ConverterContext,
     @RequestMapping(value = ["/daily"], method = [RequestMethod.GET])
     fun getDailyReportInActualMonth(): ResponseEntity<*> {
         val groupedByDayInActualMonth = transitService.getGroupedByDayInActualMonth()
-        val report = groupedByDayInActualMonth.map {
-            converterContext.get(TransitDailyAverageReportConverter::class.java).convert(it)
+        val reports = groupedByDayInActualMonth.map {
+            converterContext.get(TransitAverageReportConverter::class.java).convert(it)
         }
-        return ResponseEntity(report, HttpStatus.OK)
+        return ResponseEntity(reports, HttpStatus.OK)
     }
 }
