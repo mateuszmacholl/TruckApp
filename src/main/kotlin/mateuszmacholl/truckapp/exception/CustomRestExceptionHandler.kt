@@ -18,7 +18,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.multipart.support.MissingServletRequestPartException
 import org.springframework.web.servlet.NoHandlerFoundException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-import java.io.IOException
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 import javax.validation.ConstraintViolationException
@@ -122,16 +121,8 @@ class CustomRestExceptionHandler : ResponseEntityExceptionHandler() {
     }
 
     @ExceptionHandler(IllegalArgumentException::class)
-    @Throws(IOException::class)
     fun handleIllegalArgumentException(e: IllegalArgumentException, response: HttpServletResponse): ResponseEntity<Any> {
-        return ResponseEntity(HttpStatus.BAD_REQUEST)
-    }
-
-    @ExceptionHandler(AccessDeniedException::class)
-    fun handleAccessDeniedException(ex: Exception, request: WebRequest): ResponseEntity<Any> {
-        val message = "Access denied"
-
-        val apiError = ApiError(HttpStatus.UNAUTHORIZED, message, "")
+        val apiError = ApiError(HttpStatus.BAD_REQUEST, e.localizedMessage, "")
         return ResponseEntity(apiError, HttpHeaders(), apiError.status)
     }
 

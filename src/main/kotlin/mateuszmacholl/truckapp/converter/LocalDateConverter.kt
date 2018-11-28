@@ -1,6 +1,7 @@
 package mateuszmacholl.truckapp.converter
 
 import org.springframework.stereotype.Service
+import java.lang.IllegalArgumentException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -10,6 +11,10 @@ import java.util.*
 class LocalDateConverter: Converter<String, LocalDate> {
     override fun convert(from: String): LocalDate {
         val formatter = DateTimeFormatter.ofPattern("yyy-MM-dd", Locale.ENGLISH)
-        return LocalDate.parse(from, formatter)
+        try{
+            return LocalDate.parse(from, formatter)
+        } catch (ex: Exception){
+            throw IllegalArgumentException("Incorrect date", ex)
+        }
     }
 }
