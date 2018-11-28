@@ -1,0 +1,25 @@
+package mateuszmacholl.truckapp.utils
+
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import java.time.LocalDate
+
+class LocalDateServiceTest {
+    private val localDateService = LocalDateService()
+
+    @Test
+    fun getCurrentDateWithFirstDayOfMonth(){
+        val date = localDateService.getCurrentDateWithFirstDayOfMonth()
+        val expectedDate = LocalDate.now().withDayOfMonth(1)
+        assertEquals(date, expectedDate)
+
+    }
+
+    @Test
+    fun getCurrentDateWithOneDayAdded(){
+        val date = localDateService.getCurrentDateWithOneDayAdded()
+        val expectedDate = LocalDate.now().plusDays(1)
+
+        assertEquals(date, expectedDate)
+    }
+}

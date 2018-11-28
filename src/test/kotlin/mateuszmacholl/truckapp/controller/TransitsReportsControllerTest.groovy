@@ -31,7 +31,7 @@ class TransitsReportsControllerTest extends Specification {
         response.body != null
     }
 
-    def "get daily report in actual month"() {
+    def "get daily report in current month"() {
         when:
         def response = restTemplate.getForEntity(
                 path + "/daily", TransitAverageReport[].class

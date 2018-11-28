@@ -3,13 +3,15 @@ package mateuszmacholl.truckapp.service
 import mateuszmacholl.truckapp.model.Transit
 import mateuszmacholl.truckapp.repo.TransitRepo
 import mateuszmacholl.truckapp.specification.TransitSpec
+import mateuszmacholl.truckapp.utils.LocalDateService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class TransitService(private val transitRepo: TransitRepo) {
+class TransitService(private val transitRepo: TransitRepo,
+                     private val localDateService: LocalDateService) {
 
     fun getAll(transitSpec: TransitSpec, pageable: Pageable): Page<Transit> {
         return transitRepo.findAll(transitSpec, pageable)
@@ -26,9 +28,9 @@ class TransitService(private val transitRepo: TransitRepo) {
         )
     }
 
-    fun getGroupedByDayInActualMonth(): Collection<List<Transit>> {
-        val startDate = LocalDate.now().withDayOfMonth(1)
-        val endDate = LocalDate.now().plusDays(1)
+    fun getGroupedByDayInCurrentMonth(): Collection<List<Transit>> {
+        val startDate = localDateService.getCurrentDateWithFirstDayOfMonth()
+        val endDate = localDateService.getCurrentDateWithOneDayAdded()
         val transits = getAllInExtent(startDate, endDate)
         return transits.groupBy { it.date }.values
     }

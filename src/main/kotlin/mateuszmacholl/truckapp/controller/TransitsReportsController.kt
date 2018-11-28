@@ -37,9 +37,9 @@ class TransitsReportsController(private val converterContext: ConverterContext,
     }
 
     @RequestMapping(value = ["/daily"], method = [RequestMethod.GET])
-    fun getDailyReportInActualMonth(): ResponseEntity<*> {
-        val groupedByDayInActualMonth = transitService.getGroupedByDayInActualMonth()
-        val reports = groupedByDayInActualMonth.map {
+    fun getDailyReportInCurrentMonth(): ResponseEntity<*> {
+        val groupedByDayInCurrentMonth = transitService.getGroupedByDayInCurrentMonth()
+        val reports = groupedByDayInCurrentMonth.map {
             converterContext.get(TransitAverageReportConverter::class.java).convert(it)
         }
         return ResponseEntity(reports, HttpStatus.OK)

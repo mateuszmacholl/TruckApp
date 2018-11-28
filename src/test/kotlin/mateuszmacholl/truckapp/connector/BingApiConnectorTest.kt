@@ -1,19 +1,24 @@
 package mateuszmacholl.truckapp.connector
 
+import mateuszmacholl.truckapp.deserializer.BingApiDistanceDeserializer
+import mateuszmacholl.truckapp.provider.BingApiProvider
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.mockito.Mockito
 
-@ExtendWith(SpringExtension::class)
-@SpringBootTest
 class BingApiConnectorTest {
-    @Autowired
-    private lateinit var bingApiConnector: BingApiConnector
+    private val bingApiProvider = Mockito.mock(BingApiProvider::class.java)
+    private val bingApiDistanceDeserializer = Mockito.mock(BingApiDistanceDeserializer::class.java)
+    private val bingApiConnector = BingApiConnector(bingApiProvider, bingApiDistanceDeserializer)
     private val from = "Wejherowo"
     private val to = "Gdynia"
+
+    @BeforeEach
+    fun init(){
+        Mockito.`when`(bingApiProvider.sendRequestForDistance(from, to)).thenReturn("json")
+        Mockito.`when`(bingApiDistanceDeserializer.deserialize("json")).thenReturn(23.972)
+    }
 
     @Test
     fun getDistance() {
