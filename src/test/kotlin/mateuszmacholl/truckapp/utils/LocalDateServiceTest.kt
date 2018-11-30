@@ -1,5 +1,6 @@
 package mateuszmacholl.truckapp.utils
 
+import mateuszmacholl.truckapp.service.LocalDateService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.time.LocalDate

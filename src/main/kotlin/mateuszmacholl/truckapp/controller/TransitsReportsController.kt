@@ -25,9 +25,7 @@ class TransitsReportsController(private val converterContext: ConverterContext,
     @RequestMapping(value = ["/extent"], method = [RequestMethod.GET])
     fun getAllInExtent(@Validated dateExtent: DateExtentDto, bindingResult: BindingResult): ResponseEntity<*> {
         if(bindingResult.hasErrors()){
-            val errors = bindingResult.allErrors.map { it.defaultMessage }
-            val apiError = ApiError(HttpStatus.BAD_REQUEST, errors.joinToString())
-            return ResponseEntity(apiError, HttpStatus.BAD_REQUEST)
+            return ResponseEntity(this.getErrorsFrom(bindingResult), HttpStatus.BAD_REQUEST)
         }
         val startLocalDate = converterContext.get(LocalDateConverter::class.java).convert(dateExtent.startDate)
         val endLocalDate = converterContext.get(LocalDateConverter::class.java).convert(dateExtent.endDate)
@@ -43,5 +41,10 @@ class TransitsReportsController(private val converterContext: ConverterContext,
             converterContext.get(TransitAverageReportConverter::class.java).convert(it)
         }
         return ResponseEntity(reports, HttpStatus.OK)
+    }
+
+    private fun getErrorsFrom(bindingResult: BindingResult): ApiError {
+        val errors = bindingResult.allErrors.map { it.defaultMessage }
+        return  ApiError(HttpStatus.BAD_REQUEST, errors.joinToString())
     }
 }

@@ -1,14 +1,15 @@
 package mateuszmacholl.truckapp.dao
 
 import mateuszmacholl.truckapp.connector.BingApiConnector
+import mateuszmacholl.truckapp.utils.DistanceCalculator
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 
-class DistanceDaoTest {
+class DistanceCalculatorTest {
     private val bingApiConnector = Mockito.mock(BingApiConnector::class.java)
-    private val distanceDao = DistanceDao(bingApiConnector)
+    private val distanceCalculator = DistanceCalculator(bingApiConnector)
     private val from = "xxx"
     private val to = "zzz"
 
@@ -19,7 +20,7 @@ class DistanceDaoTest {
 
     @Test
     fun getDistance(){
-        val distance = distanceDao.getDistance(from, to)
+        val distance = distanceCalculator.calc(from, to)
         assertEquals(10.0, distance)
     }
 }

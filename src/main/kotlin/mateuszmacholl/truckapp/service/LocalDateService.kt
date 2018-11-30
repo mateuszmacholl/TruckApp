@@ -1,4 +1,4 @@
-package mateuszmacholl.truckapp.utils
+package mateuszmacholl.truckapp.service
 
 import org.springframework.stereotype.Service
 import java.time.LocalDate

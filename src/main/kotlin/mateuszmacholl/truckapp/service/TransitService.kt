@@ -3,7 +3,6 @@ package mateuszmacholl.truckapp.service
 import mateuszmacholl.truckapp.model.Transit
 import mateuszmacholl.truckapp.repo.TransitRepo
 import mateuszmacholl.truckapp.specification.TransitSpec
-import mateuszmacholl.truckapp.utils.LocalDateService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
