@@ -17,7 +17,7 @@ class TransitsControllerTest extends Specification {
     @Autowired
     private TestRestTemplate restTemplate
 
-    private String path = "/transits"
+    private String path = "/transits/"
 
     def "get all"() {
         when:
@@ -25,6 +25,17 @@ class TransitsControllerTest extends Specification {
         then:
         HttpStatus.OK == response.statusCode
         response.body.length() > 0
+    }
+
+
+    def "get by id"() {
+        given:
+        def id = 1001
+        when:
+        def response = restTemplate.getForEntity(path + id, Transit.class)
+
+        then:
+        HttpStatus.OK == response.statusCode
     }
 
     def "add"() {

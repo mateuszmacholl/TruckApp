@@ -18,9 +18,8 @@ class LocalDateServiceTest {
 
     @Test
     fun getCurrentDateWithOneDayAdded(){
-        val date = localDateService.getCurrentDateWithOneDayAdded()
-        val expectedDate = LocalDate.now().plusDays(1)
-
+        val date = localDateService.getCurrentDate()
+        val expectedDate = LocalDate.now()
         assertEquals(date, expectedDate)
     }
 }

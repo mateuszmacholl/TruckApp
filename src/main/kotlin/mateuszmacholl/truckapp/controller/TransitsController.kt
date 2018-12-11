@@ -9,10 +9,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @Validated
@@ -23,6 +20,15 @@ class TransitsController(private val converterContext: ConverterContext,
     fun getAll(transitSpec: TransitSpec, pageable: Pageable): ResponseEntity<*> {
         val transits = transitService.getAll(transitSpec, pageable)
         return ResponseEntity(transits, HttpStatus.OK)
+    }
+
+    @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
+    fun findById(@PathVariable(value = "id") id: Int): ResponseEntity<*> {
+        val transit = transitService.findById(id)
+        return if(transit.isPresent){
+            ResponseEntity(transit, HttpStatus.OK)
+        } else
+            ResponseEntity("", HttpStatus.NOT_FOUND)
     }
 
     @RequestMapping(value = [""], method = [RequestMethod.POST])

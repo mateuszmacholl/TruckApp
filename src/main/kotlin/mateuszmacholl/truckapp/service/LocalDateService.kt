@@ -9,7 +9,7 @@ class LocalDateService {
         return LocalDate.now().withDayOfMonth(1)
     }
 
-    fun getCurrentDateWithOneDayAdded(): LocalDate {
-        return LocalDate.now().plusDays(1)
+    fun getCurrentDate(): LocalDate {
+        return LocalDate.now()
     }
 }

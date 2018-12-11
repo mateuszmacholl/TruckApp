@@ -1,6 +1,7 @@
 package mateuszmacholl.truckapp.model
 
 import com.fasterxml.jackson.annotation.JsonFormat
+import java.io.Serializable
 import java.time.LocalDate
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -12,7 +13,7 @@ data class Transit(
         val price: Double,
         @JsonFormat(pattern="yyyy-MM-dd")
         val date: LocalDate
-) {
+): Serializable {
     @Id
     @GeneratedValue
     var id: Int? = null
