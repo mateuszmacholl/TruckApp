@@ -32,7 +32,7 @@ class TransitService(private val transitRepo: TransitRepo,
         return this.transitRepo.save(transit)
     }
 
-
+    @Cacheable(value = ["reports"])
     fun getAllInExtent(startDate: LocalDate, endDate: LocalDate): List<Transit> {
         val fixedStartDate = startDate.plusDays(1)
         val fixedEndDate = endDate.plusDays(1)
